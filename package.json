@@ -1,0 +1,30 @@
+{
+  "name": "show-time",
+  "version": "1.0.0",
+  "description": "A platform that promotes talents.",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gracelungu/show-time.git"
+  },
+  "author": "Grace Lungu Birindwa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gracelungu/show-time/issues"
+  },
+  "homepage": "https://github.com/gracelungu/show-time#readme",
+  "dependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}
