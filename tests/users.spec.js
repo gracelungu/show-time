@@ -1,3 +1,3 @@
-describe("Testing jest", () => {
-  it("Should test jest", () => {});
+describe('Testing jest', () => {
+  it('Should test jest', () => {});
 });

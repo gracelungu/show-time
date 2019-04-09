@@ -4,9 +4,11 @@
   "description": "A platform that promotes talents.",
   "main": "app.js",
   "scripts": {
+    "lint": "npx eslint . --ext .js --ignore-pattern node_modules/ --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "start": "babel-watch app.js"
   },
   "repository": {
     "type": "git",
@@ -26,12 +28,15 @@
     "@babel/register": "^7.4.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "babel-watch": "^7.0.0",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
+    "eslint-config": "^0.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0"
   }
