@@ -14,6 +14,15 @@ module.exports = {
     sourceType: "module"
   },
   rules: {
-    "no-console": 0
+    "no-console": 0,
+    "require-jsdoc": ["error", {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": false,
+        "ClassDeclaration": false,
+        "ArrowFunctionExpression": false,
+        "FunctionExpression": false
+      }
+    }]
   }
 };
