@@ -12,6 +12,61 @@ dotenv.config();
  * @class User
  */
 class User {
+  /**
+   * Checks whether the user exists,
+   * if not, a new one is created,
+   * else the same user is returned
+   *
+   * @static
+   * @param {*} res
+   * @param {*} user
+   * @returns {object} user
+   * @memberof User
+   */
+  static async findOrCreate(res, user) {
+    try {
+      const {
+        id, email, picture,
+      } = user;
+
+      const username = email.split('@')[0] + id.substr(0, 5);
+      const token = jwt.sign({ email, username }, process.env.SECRET, { expiresIn: '24h' });
+
+      const exist = await users.findOne({ email });
+
+      if (exist == null) {
+        const result = await users.create({
+          username,
+          email,
+          picture,
+        });
+        return res.status(200).json({
+          status: 200,
+          user: result,
+          token,
+        });
+      }
+
+      return res.status(200).json({
+        status: 200,
+        user: exist,
+        token,
+      });
+    } catch (e) {
+      errors.errorResponse(res, e);
+    }
+    return true;
+  }
+
+  /**
+   *
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   * @memberof User
+   */
   static async signup(req, res) {
     const { username, email, password } = req.body;
 
@@ -32,6 +87,10 @@ class User {
       errors.errorResponse(res, e);
     }
     return true;
+  }
+
+  static async socialAuth(req, res) {
+    await User.findOrCreate(res, req.user);
   }
 }
 
