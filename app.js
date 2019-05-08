@@ -1,13 +1,20 @@
 import express from 'express';
+import passport from 'passport';
+import bodyParser from 'body-parser';
 import Database from './server/models';
 import router from './server/routes';
 
 const app = express();
 
-app.use(express.json());
-
 // Initialize the database
 Database.connect();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
+
+app.use(passport.initialize());
 
 // Api routes
 app.use('/api', router);

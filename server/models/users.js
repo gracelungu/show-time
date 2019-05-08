@@ -4,12 +4,16 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
     lowercase: true,
+  },
+  picture: {
+    type: String,
   },
   watchlist: {
     type: Array,
@@ -17,7 +21,6 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   createdDate: {
     type: Date,

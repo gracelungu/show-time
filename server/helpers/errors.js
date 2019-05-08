@@ -17,7 +17,7 @@ class errors {
     if (e.code === 11000) {
       return res.status(400).json({
         status: 400,
-        message: 'A user with the same email address already exist',
+        message: 'A user with the same email or username already exist',
       });
     }
 

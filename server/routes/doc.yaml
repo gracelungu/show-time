@@ -1,0 +1,93 @@
+swagger: "2.0"
+info:
+  description: "A platform that provide quality movie trailers and reviews"
+  version: "1.0.0"
+  title: "Show time"
+  termsOfService: "No terms do far"
+  contact:
+    email: "showtime@show.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:3000"
+basePath: "/api"
+tags:
+- name: "users"
+  description: "A user access the website to get trailers and interact with the data."
+  externalDocs:
+    description: "Find out more"
+    url: "localhost:300"
+schemes:
+- "https"
+- "http"
+
+paths:
+  /auth/signup:
+    post:
+      tags:
+      - "users"
+      summary: "Create an account"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "A user object"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            user: 
+              type: "object"
+              properties:
+                username:
+                  type: "string"
+                email:
+                  type: "string"
+                password:
+                  type: "string"
+      responses:
+        201:
+          description: "Successful account creation"
+        400:
+          description: "Bad request"
+
+  /auth/google:
+    post:
+      tags:
+      - "users"
+      summary: "Create an account or login with google"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        201:
+          description: "Successful account creation"
+        200:
+          description: "Successfully logged in"
+  /auth/facebook:
+    post:
+      tags:
+      - "users"
+      summary: "Create an account or login with facebook"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        201:
+          description: "Successful account creation"
+        200:
+          description: "Successfully logged in"
