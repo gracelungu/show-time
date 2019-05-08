@@ -91,3 +91,35 @@ paths:
           description: "Successful account creation"
         200:
           description: "Successfully logged in"
+
+  /auth/login:
+    post:
+      tags:
+      - "users"
+      summary: "Login into the given account"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Contains required login informations"
+        required: true
+        schema:
+          type: "object"
+          properties:
+              email:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        200:
+          description: "Successful login"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized user"

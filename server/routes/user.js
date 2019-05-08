@@ -25,4 +25,7 @@ router.route('/facebook')
 
 router.route('/facebook/redirect').get(passport.authenticate('facebook'), user.socialAuth);
 
+router.route('/login')
+  .post(validations.login, user.login);
+
 export default router;
