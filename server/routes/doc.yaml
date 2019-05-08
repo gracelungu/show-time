@@ -74,3 +74,20 @@ paths:
           description: "Successful account creation"
         200:
           description: "Successfully logged in"
+  /auth/facebook:
+    post:
+      tags:
+      - "users"
+      summary: "Create an account or login with facebook"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        201:
+          description: "Successful account creation"
+        200:
+          description: "Successfully logged in"

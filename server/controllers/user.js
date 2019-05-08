@@ -26,10 +26,10 @@ class User {
   static async findOrCreate(res, user) {
     try {
       const {
-        id, email, picture,
+        id, email, picture, displayName,
       } = user;
 
-      const username = email.split('@')[0] + id.substr(0, 5);
+      const username = displayName.replace(/\s+/g, '') + id.substr(0, 5);
       const token = jwt.sign({ email, username }, process.env.SECRET, { expiresIn: '24h' });
 
       const exist = await users.findOne({ email });

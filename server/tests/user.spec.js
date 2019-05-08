@@ -32,7 +32,7 @@ describe('Tests for the user endpoints', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res.body.status).toBe(400);
-        expect(res.body.message).toBe('A user with the same email address already exist');
+        expect(res.body.message).toBe('A user with the same email or username already exist');
         done();
       });
   });
