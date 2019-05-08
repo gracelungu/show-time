@@ -92,6 +92,43 @@ class User {
   static async socialAuth(req, res) {
     await User.findOrCreate(res, req.user);
   }
+
+  static async login(req, res) {
+    const { email, password } = req.body;
+
+    try {
+      const user = await users.findOne({ email });
+
+      if (user) {
+        const match = await bcrypt.compare(password, user.password);
+        user.password = undefined;
+
+        const { username } = user;
+        const token = jwt.sign({ email, username }, process.env.SECRET, { expiresIn: '24h' });
+
+        if (match) {
+          return res.status(200).json({
+            status: 200,
+            user,
+            token,
+          });
+        }
+
+        return res.status(401).json({
+          status: 401,
+          message: 'Wrong password',
+        });
+      }
+
+      return res.status(404).json({
+        status: 404,
+        message: 'User not found for the given email',
+      });
+    } catch (e) {
+      errors.errorResponse(res, e);
+    }
+    return true;
+  }
 }
 
 export default User;

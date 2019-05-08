@@ -13,39 +13,96 @@ afterAll(async () => {
 });
 
 describe('Tests for the user endpoints', () => {
-  it('Should create a new user', (done) => {
-    request(app)
-      .post('/api/auth/signup')
-      .send(user)
-      .end((err, res) => {
-        if (err) done(err);
-        expect(res.body.status).toBe(201);
-        expect(res.body.user.active).toBe(true);
-        done();
-      });
+  describe('Account creation', () => {
+    it('Should create a new user', (done) => {
+      request(app)
+        .post('/api/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(201);
+          expect(res.body.user.active).toBe(true);
+          done();
+        });
+    });
+
+    it('Should fail to create the same user twice', (done) => {
+      request(app)
+        .post('/api/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(400);
+          expect(res.body.message).toBe('A user with the same email or username already exist');
+          done();
+        });
+    });
+
+    it('Should fail when the wrong body is sent', (done) => {
+      request(app)
+        .post('/api/auth/signup')
+        .send({ body: 'wrong' })
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(400);
+          expect(res.body.message).toBe('username is required');
+          done();
+        });
+    });
   });
 
-  it('Should fail to create the same user twice', (done) => {
-    request(app)
-      .post('/api/auth/signup')
-      .send(user)
-      .end((err, res) => {
-        if (err) done(err);
-        expect(res.body.status).toBe(400);
-        expect(res.body.message).toBe('A user with the same email or username already exist');
-        done();
-      });
+  describe('Login actions', () => {
+    it('Should login the user', (done) => {
+      delete user.username;
+      request(app)
+        .post('/api/auth/login')
+        .send(user)
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(200);
+          expect(res.body.user.email).toBe('gradie@gmail.com');
+          done();
+        });
+    });
+
+    it('Should fail to login with a wrong password', (done) => {
+      user.password = 'wrong_password';
+      request(app)
+        .post('/api/auth/login')
+        .send(user)
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(401);
+          expect(res.body.message).toBe('Wrong password');
+          done();
+        });
+    });
+
+    it('Should fail to find a user that does not exist', (done) => {
+      user.email = 'wrong@email.com'
+      request(app)
+        .post('/api/auth/login')
+        .send(user)
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(404);
+          expect(res.body.message).toBe('User not found for the given email');
+          done();
+        });
+    });
+
+    it('Should fail to find a user that does not exist', (done) => {
+      user.email = 'wrong@email_format'
+      request(app)
+        .post('/api/auth/login')
+        .send(user)
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(400);
+          expect(res.body.message).toBe('email must be a valid email');
+          done();
+        });
+    });
   });
 
-  it('Should fail when the wrong body is sent', (done) => {
-    request(app)
-      .post('/api/auth/signup')
-      .send({ body: 'wrong' })
-      .end((err, res) => {
-        if (err) done(err);
-        expect(res.body.status).toBe(400);
-        expect(res.body.message).toBe('username is required');
-        done();
-      });
-  });
 });
