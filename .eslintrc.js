@@ -15,6 +15,7 @@ module.exports = {
   },
   rules: {
     "no-console": 0,
+    "linebreak-style": 0,
     "require-jsdoc": ["error", {
       "require": {
         "FunctionDeclaration": true,
