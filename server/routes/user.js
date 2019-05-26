@@ -5,13 +5,6 @@ import validations from '../middlewares/validations/user';
 
 const router = express.Router();
 
-router.get('/crud', (req, res) => {
-  res.status(200).json({
-    message: 'hello',
-    status: '200',
-  });
-});
-
 router.route('/signup')
   .post(validations.signup, user.signup);
 
