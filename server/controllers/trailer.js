@@ -43,6 +43,7 @@ class Trailer {
     try {
       const { title, description, releaseDate } = req.body;
 
+      // checking if all the images are inserted
       if (Object.keys(req.files).length <= 1) {
         return res.status(400).json({
           error: 'images are required',
@@ -56,7 +57,6 @@ class Trailer {
         landScape: req.files.landscape[0].path,
         portrait: req.files.portrait[0].path,
       });
-      console.log(req.files.landscape);
       return res.status(200).json({
         result: data,
         status: 200,
