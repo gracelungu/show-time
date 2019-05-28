@@ -123,3 +123,64 @@ paths:
           description: "Bad request"
         401:
           description: "Unauthorized user"
+
+paths:
+  /admin/add:
+    post:
+      tags:
+      - "trailers"
+      summary: "add trailer details"
+      description: ""
+      consumes:
+      - "form-data"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "A trailer object"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            trailer: 
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                description:
+                  type: "string"
+                releaseDate:
+                  type: "string"
+                landScape:
+                  type: "string"
+                portrait:
+                  type: "string"
+      responses:
+        201:
+          description: "Successful trailer addition"
+        400:
+          description: "Bad request"
+
+paths:
+  /admin/trailer:
+    post:
+      tags:
+      - "trailers"
+      summary: "get list of trailers"
+      description: ""
+      consumes:
+      - ""
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: ""
+        name: ""
+        description: "A trailer object"
+      responses:
+        201:
+          description: "Successful trailer addition"
+        400:
+          description: "Bad request"          

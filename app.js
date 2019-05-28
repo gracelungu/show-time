@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import bodyParser from 'body-parser';
+import path from 'path';
 import Database from './server/models';
 import router from './server/routes';
 
@@ -9,10 +10,13 @@ const app = express();
 // Initialize the database
 Database.connect();
 
+app.use(express.static(path.join(__dirname, '/uploads')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
+
 
 app.use(passport.initialize());
 
