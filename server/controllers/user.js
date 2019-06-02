@@ -148,6 +148,15 @@ class User {
     return true;
   }
 
+  /**
+   * Updates the user profile
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns {object} user
+   * @memberof User
+   */
   static async update(req, res) {
     const { username, picture } = req.body;
 
@@ -168,6 +177,60 @@ class User {
       );
 
       user.password = undefined;
+
+      return res.status(200).json({
+        status: 200,
+        user,
+      });
+    } catch (e) {
+      errors.errorResponse(res, e);
+    }
+    return true;
+  }
+
+  /**
+   * Get all users
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns {object} users
+   * @memberof User
+   */
+  static async getAll(req, res) {
+    try {
+      const allUsers = await users.find();
+      return res.status(200).json({
+        status: 200,
+        users: allUsers,
+      });
+    } catch (e) {
+      errors.errorResponse(res, e);
+    }
+    return true;
+  }
+
+  /**
+   * Get all users
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns {object} users
+   * @memberof User
+   */
+  static async get(req, res) {
+    const { username } = req.params;
+
+    try {
+      const user = await users.findOne({ username });
+
+      if (!user) {
+        return res.status(404).json({
+          status: 404,
+          message: 'User not found',
+        });
+      }
 
       return res.status(200).json({
         status: 200,
