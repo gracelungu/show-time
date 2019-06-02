@@ -135,7 +135,7 @@ describe('Tests for the user endpoints', () => {
         .send(fields)
         .end((err, res) => {
           if (err) done(err);
-          expect(res.body.status).toBe(409);
+          expect(res.status).toBe(409);
           expect(res.body.message).toBe('Username already exist');
           done();
         });
