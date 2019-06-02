@@ -170,6 +170,14 @@ class User {
     const { email } = req.user;
 
     try {
+      const exist = await users.findOne({ username });
+      if (exist) {
+        return res.status(200).json({
+          status: 409,
+          message: 'Username already exist',
+        });
+      }
+
       const user = await users.findOneAndUpdate(
         { email },
         { username, picture, updatedDate: new Date() },
