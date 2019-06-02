@@ -107,7 +107,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Contains required login informations"
+        description: "Contains required login information"
         required: true
         schema:
           type: "object"
@@ -123,3 +123,65 @@ paths:
           description: "Bad request"
         401:
           description: "Unauthorized user"
+
+  /user:
+    put:
+      tags:
+      - "users"
+      summary: "updates the user information"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Contains information to update"
+        required: true
+        schema:
+          type: "object"
+          properties:
+              username:
+                type: "string"
+              picture:
+                type: "string"
+      responses:
+        200:
+          description: "Successful updated"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized user"
+    get:
+      tags:
+      - "users"
+      summary: "Return all users"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "The users array of objects"
+
+  /user/{username}:
+    get:
+      tags:
+      - "users"
+      summary: "Return the user"
+      description: ""
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "The user object"

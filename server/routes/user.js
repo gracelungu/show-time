@@ -30,6 +30,10 @@ router.route('/login')
   .post(validations.login, user.login);
 
 router.route('/')
+  .get(user.getAll)
   .put(validations.update, Auth.check, user.update);
+
+router.route('/:username')
+  .get(user.get);
 
 export default router;

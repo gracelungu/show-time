@@ -137,13 +137,25 @@ describe('Tests for the user endpoints', () => {
         .send(fields)
         .end((err, res) => {
           if (err) done(err);
-          console.log(res.body);
-          expect(res.body.status).toBe(200);
-          expect(res.body.message).toBe('new_user_name');
+          expect(res.body.status).toBe(400);
+          expect(res.body.message).toBe('picture with value imagejpg fails to match the required pattern httpspngjpgjpegi');
           done();
         });
     });
 
   });
+
+  describe('Get users', () => {
+    it('should return a new user', (done) => {
+      request(app)
+        .get('/api/user')
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body.status).toBe(200);
+          expect(res.body.users).toEqual(expect.any(Array));
+          done();
+        });
+    })
+  })
 
 });
