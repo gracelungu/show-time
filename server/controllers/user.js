@@ -172,7 +172,7 @@ class User {
     try {
       const exist = await users.findOne({ username });
       if (exist) {
-        return res.status(200).json({
+        return res.status(409).json({
           status: 409,
           message: 'Username already exist',
         });
