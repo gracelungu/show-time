@@ -67,7 +67,7 @@ class User {
   static update(req, res, next) {
     const schema = Joi.object().keys({
       username: Joi.string().min(3).max(20),
-      picture: Joi.string().regex(/(https?:\/\/.*\.(?:png|jpg|jpeg))/i),
+      picture: Joi.string(),
     });
 
     const result = Joi.validate(req.body, schema);
