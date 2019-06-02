@@ -3,7 +3,7 @@ import app from '../../server';
 import users from '../models/users';
 
 const user = {
-  username: 'gradie1',
+  username: 'someusername',
   email: 'gradie@gmail.com',
   password: 'res86ui',
 };
@@ -122,23 +122,21 @@ describe('Tests for the user endpoints', () => {
         .send(fields)
         .end((err, res) => {
           if (err) done(err);
-          console.log(res.body);
           expect(res.body.status).toBe(200);
           expect(res.body.user.username).toBe('new_user_name');
           done();
         });
     });
 
-    it('Should fail to update when the fields are wrong', (done) => {
-      fields.picture = 'image.jpg';
+    it('Should fail when the username already exist', (done) => {
       request(app)
         .put('/api/user')
         .set('Authorization', `Bearer ${token}`)
         .send(fields)
         .end((err, res) => {
           if (err) done(err);
-          expect(res.body.status).toBe(400);
-          expect(res.body.message).toBe('picture with value imagejpg fails to match the required pattern httpspngjpgjpegi');
+          expect(res.body.status).toBe(409);
+          expect(res.body.message).toBe('Username already exist');
           done();
         });
     });
