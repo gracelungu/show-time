@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import Database from './server/models';
 import router from './server/routes';
@@ -10,6 +11,7 @@ const app = express();
 Database.connect();
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
