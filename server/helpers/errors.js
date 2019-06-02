@@ -14,6 +14,13 @@ class errors {
    * @memberof errors
    */
   static errorResponse(res, e) {
+    if (e.name && e.name === 'JsonWebTokenError') {
+      return res.status(400).json({
+        status: 400,
+        message: e.message,
+      });
+    }
+
     if (e.code === 11000) {
       return res.status(400).json({
         status: 400,

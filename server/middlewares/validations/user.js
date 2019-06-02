@@ -19,7 +19,7 @@ class User {
    */
   static signup(req, res, next) {
     const schema = Joi.object().keys({
-      username: Joi.string().required(),
+      username: Joi.string().min(3).max(20).required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(6).max(100).required(),
     });
@@ -45,6 +45,29 @@ class User {
     const schema = Joi.object().keys({
       email: Joi.string().email().required(),
       password: Joi.string().min(6).max(100).required(),
+    });
+
+    const result = Joi.validate(req.body, schema);
+    if (!result.error) {
+      return next();
+    }
+    return errors.joiErrorResponse(res, result.error);
+  }
+
+  /**
+ * Validates the update body
+ *
+ * @static
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ * @memberof User
+ */
+  static update(req, res, next) {
+    const schema = Joi.object().keys({
+      username: Joi.string().min(3).max(20),
+      picture: Joi.string().regex(/(https?:\/\/.*\.(?:png|jpg|jpeg))/i),
     });
 
     const result = Joi.validate(req.body, schema);

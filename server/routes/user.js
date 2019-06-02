@@ -2,6 +2,7 @@ import express from 'express';
 import passport from '../config/passport';
 import user from '../controllers/user';
 import validations from '../middlewares/validations/user';
+import Auth from '../middlewares/authentification/auth';
 
 const router = express.Router();
 
@@ -27,5 +28,8 @@ router.route('/facebook/redirect').get(passport.authenticate('facebook'), user.s
 
 router.route('/login')
   .post(validations.login, user.login);
+
+router.route('/')
+  .put(validations.update, Auth.check, user.update);
 
 export default router;

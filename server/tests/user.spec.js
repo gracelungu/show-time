@@ -8,6 +8,8 @@ const user = {
   password: 'res86ui',
 };
 
+let token;
+
 afterAll(async () => {
   await users.remove({});
 });
@@ -20,6 +22,7 @@ describe('Tests for the user endpoints', () => {
         .send(user)
         .end((err, res) => {
           if (err) done(err);
+          token = res.body.token;
           expect(res.body.status).toBe(201);
           expect(res.body.user.active).toBe(true);
           done();
@@ -103,6 +106,44 @@ describe('Tests for the user endpoints', () => {
           done();
         });
     });
+  });
+
+  describe('Update actions', () => {
+
+    const fields = {
+      username: 'new_user_name',
+      picture: 'https://image.jpg',
+    }
+
+    it('Should update the user fields', (done) => {
+      request(app)
+        .put('/api/user')
+        .set('Authorization', `Bearer ${token}`)
+        .send(fields)
+        .end((err, res) => {
+          if (err) done(err);
+          console.log(res.body);
+          expect(res.body.status).toBe(200);
+          expect(res.body.user.username).toBe('new_user_name');
+          done();
+        });
+    });
+
+    it('Should fail to update when the fields are wrong', (done) => {
+      fields.picture = 'image.jpg';
+      request(app)
+        .put('/api/user')
+        .set('Authorization', `Bearer ${token}`)
+        .send(fields)
+        .end((err, res) => {
+          if (err) done(err);
+          console.log(res.body);
+          expect(res.body.status).toBe(200);
+          expect(res.body.message).toBe('new_user_name');
+          done();
+        });
+    });
+
   });
 
 });

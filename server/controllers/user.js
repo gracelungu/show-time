@@ -89,10 +89,28 @@ class User {
     return true;
   }
 
+  /**
+   * Controller to sign the user
+   * with facebook or google
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @memberof User
+   */
   static async socialAuth(req, res) {
     await User.findOrCreate(res, req.user);
   }
 
+  /**
+   * Login the user
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   * @memberof User
+   */
   static async login(req, res) {
     const { email, password } = req.body;
 
@@ -123,6 +141,37 @@ class User {
       return res.status(404).json({
         status: 404,
         message: 'User not found for the given email',
+      });
+    } catch (e) {
+      errors.errorResponse(res, e);
+    }
+    return true;
+  }
+
+  static async update(req, res) {
+    const { username, picture } = req.body;
+
+    if (!username && !picture) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Please provide at least on field to update',
+      });
+    }
+
+    const { email } = req.user;
+
+    try {
+      const user = await users.findOneAndUpdate(
+        { email },
+        { username, picture, updatedDate: new Date() },
+        { new: true },
+      );
+
+      user.password = undefined;
+
+      return res.status(200).json({
+        status: 200,
+        user,
       });
     } catch (e) {
       errors.errorResponse(res, e);
